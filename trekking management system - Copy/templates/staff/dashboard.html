@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Staff Dashboard</h2>
+<div class="card shadow">
+    <div class="card-header"><h4>Assigned Treks</h4></div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Registered Users</th>
+                <th>Actions</th>
+            </tr>
+            {% for trek in assigned_treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.status }}</td>
+                <td>{{ trek.booked_count() }}</td>
+                <td>
+                    <a href="{{ url_for('manage_trek', trek_id=trek.id) }}" class="btn btn-sm btn-warning">Manage</a>
+                    <a href="{{ url_for('participants', trek_id=trek.id) }}" class="btn btn-sm btn-info">Participants</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

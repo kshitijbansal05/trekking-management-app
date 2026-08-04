@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}All Bookings{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">All Bookings</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Booking ID</th>
+                <th>User</th>
+                <th>Trek</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.user.full_name }} ({{ booking.user.id }})</td>
+                <td>{{ booking.trek.name }} ({{ booking.trek.id }})</td>
+                <td>{{ booking.booking_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ booking.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">My Bookings</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Booking ID</th>
+                <th>Trek</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Booking Date</th>
+                <th>Action</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.trek.name }}</td>
+                <td>{{ booking.trek.location }}</td>
+                <td>{{ booking.status }}</td>
+                <td>{{ booking.booking_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    {% if booking.status == 'Booked' %}
+                        <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}" class="btn btn-sm btn-danger">Cancel</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

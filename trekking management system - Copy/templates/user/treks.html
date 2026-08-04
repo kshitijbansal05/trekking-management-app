@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Browse Treks{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Browse Treks</h2>
+
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <select name="difficulty" class="form-select">
+            <option value="">All Difficulties</option>
+            <option value="Easy" {% if difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+            <option value="Moderate" {% if difficulty == 'Moderate' %}selected{% endif %}>Moderate</option>
+            <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <input type="text" name="location" value="{{ location }}" class="form-control" placeholder="Search by location">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Slots</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration_days }} days</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
+                <td>
+                    {% if trek.available_slots > 0 %}
+                        <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-sm btn-success">Book</a>
+                    {% else %}
+                        <span class="badge bg-danger">Full</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

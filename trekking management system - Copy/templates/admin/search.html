@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<h2>Search</h2>
+<form method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Search by name, email, location or ID">
+        <button class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+{% if q %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow mb-3">
+            <div class="card-header"><h5>Users</h5></div>
+            <div class="card-body">
+                {% for user in users %}
+                    <p>{{ user.id }} - {{ user.full_name }} - {{ user.email }}</p>
+                {% else %}
+                    <p>No users found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow mb-3">
+            <div class="card-header"><h5>Staff</h5></div>
+            <div class="card-body">
+                {% for s in staff %}
+                    <p>{{ s.id }} - {{ s.full_name }} - {{ s.email }}</p>
+                {% else %}
+                    <p>No staff found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow mb-3">
+            <div class="card-header"><h5>Treks</h5></div>
+            <div class="card-body">
+                {% for trek in treks %}
+                    <p>{{ trek.id }} - {{ trek.name }} - {{ trek.location }}</p>
+                {% else %}
+                    <p>No treks found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

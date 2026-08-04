@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Manage Treks{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h2>Manage Treks</h2>
+    <a href="{{ url_for('create_trek') }}" class="btn btn-primary">Create Trek</a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Total Slots</th>
+                <th>Available</th>
+                <th>Status</th>
+                <th>Assigned Staff</th>
+                <th>Assign Staff</th>
+                <th>Actions</th>
+            </tr>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.total_slots }}</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
+                <td>
+                    {% if trek.assigned_staff %}
+                        {{ trek.assigned_staff.full_name }} (ID: {{ trek.assigned_staff.id }})
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('assign_staff', trek_id=trek.id) }}">
+                        <select name="staff_id" class="form-select form-select-sm mb-1">
+                            <option value="">Select Staff</option>
+                            {% for staff in staff_list %}
+                                <option value="{{ staff.id }}">{{ staff.full_name }} ({{ staff.id }})</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-sm btn-success">Assign</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ url_for('edit_trek', trek_id=trek.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this trek?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

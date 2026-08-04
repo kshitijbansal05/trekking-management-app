@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Manage Staff{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Manage Staff</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Approved</th>
+                <th>Blacklisted</th>
+                <th>Actions</th>
+            </tr>
+            {% for s in staff_members %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.full_name }}</td>
+                <td>{{ s.email }}</td>
+                <td>{{ "Yes" if s.is_approved else "No" }}</td>
+                <td>{{ "Yes" if s.is_blacklisted else "No" }}</td>
+                <td>
+                    {% if not s.is_approved %}
+                        <a href="{{ url_for('approve_staff', user_id=s.id) }}" class="btn btn-sm btn-success">Approve</a>
+                    {% endif %}
+                    <a href="{{ url_for('toggle_blacklist', user_id=s.id) }}" class="btn btn-sm btn-dark">
+                        {{ "Unblacklist" if s.is_blacklisted else "Blacklist" }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

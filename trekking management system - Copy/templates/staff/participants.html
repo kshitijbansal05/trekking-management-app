@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Participants{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Participants - {{ trek.name }}</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Booking ID</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.user.full_name }}</td>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.user.phone }}</td>
+                <td>{{ booking.status }}</td>
+                <td>
+                    {% if booking.status == 'Booked' %}
+                        <a href="{{ url_for('complete_booking', booking_id=booking.id) }}" class="btn btn-sm btn-success">Mark Completed</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

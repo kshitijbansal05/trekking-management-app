@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Manage Trek{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Manage Trek: {{ trek.name }}</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <p><strong>Location:</strong> {{ trek.location }}</p>
+        <p><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+        <p><strong>Booked Users:</strong> {{ trek.booked_count() }}</p>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">{{ form.available_slots.label(class="form-label") }}{{ form.available_slots(class="form-control") }}</div>
+            <div class="mb-3">{{ form.status.label(class="form-label") }}{{ form.status(class="form-select") }}</div>
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

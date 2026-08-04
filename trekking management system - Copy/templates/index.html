@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Home - TrekApp{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-4">
+        <h1 class="display-5 fw-bold">Trekking Management Application</h1>
+        <p class="col-md-8 fs-5">
+            Manage treks, staff assignments, and user bookings in one place.
+        </p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Login</a>
+            <a href="{{ url_for('register_user') }}" class="btn btn-success btn-lg">Register as User</a>
+            <a href="{{ url_for('register_staff') }}" class="btn btn-warning btn-lg">Register as Staff</a>
+        {% endif %}
+    </div>
+</div>
+
+<h3>Open Treks</h3>
+<div class="row">
+    {% for trek in open_treks %}
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ trek.name }}</h5>
+                    <p class="card-text">
+                        <strong>Location:</strong> {{ trek.location }}<br>
+                        <strong>Difficulty:</strong> {{ trek.difficulty }}<br>
+                        <strong>Duration:</strong> {{ trek.duration_days }} days<br>
+                        <strong>Slots:</strong> {{ trek.available_slots }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No open treks available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

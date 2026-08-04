@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Users and Staff</h2>
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Approved</th>
+                <th>Blacklisted</th>
+                <th>Action</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ "Yes" if user.is_approved else "No" }}</td>
+                <td>{{ "Yes" if user.is_blacklisted else "No" }}</td>
+                <td>
+                    <a href="{{ url_for('toggle_blacklist', user_id=user.id) }}" class="btn btn-sm btn-dark">
+                        {{ "Unblacklist" if user.is_blacklisted else "Blacklist" }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

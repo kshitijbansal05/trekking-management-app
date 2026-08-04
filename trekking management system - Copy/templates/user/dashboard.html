@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">User Dashboard</h2>
+
+<div class="card shadow mb-4">
+    <div class="card-header"><h4>Available Treks</h4></div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Slots</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
+                <td>
+                    <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-sm btn-primary">Book</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-header"><h4>My Recent Bookings</h4></div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Booking ID</th>
+                <th>Trek</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            {% for booking in my_bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.trek.name }}</td>
+                <td>{{ booking.status }}</td>
+                <td>{{ booking.booking_date.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
