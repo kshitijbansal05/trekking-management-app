@@ -9,7 +9,7 @@ def seed_admin():
             full_name="Admin",
             email=admin_email,
             phone="9999999999",
-            password_hash=generate_password_hash("admin123"),
+            password_hash="admin123",
             role="admin",
             is_approved=True,
             is_blacklisted=False,
